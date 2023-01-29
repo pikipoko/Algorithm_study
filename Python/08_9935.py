@@ -1,18 +1,19 @@
 import sys
 input = sys.stdin.readline
 
-norm = list(input().rstrip())
-boom = input().rstrip()
-result = ''
+original_str = list(input().rstrip())
+boom = list(input().rstrip())
 
-# 문자열이 폭발 문자열을 포함하고 있는 경우에, 모든 폭발 문자열이 폭발하게 된다.
-# 남은 문자열을 순서대로 이어 붙여 새로운 문자열을 만든다.
-# 남아 있는 문자열이 없는 경우 FRULA 출력
-# 폭발 문자열은 같은 문자를 두 개 이상 포함X
+org_i = 0
+while org_i < len(original_str) and len(original_str) > 0:
+    pre_str = original_str[org_i:org_i+len(boom)]
+    if pre_str == boom:
+        original_str = original_str[:org_i] + original_str[org_i+len(boom):]
+        org_i -= 1
+    else:
+        org_i += 1
 
-while len(norm) > 0:
-    pre = ''
-    last_idx = len(boom) - 1
-    for i in range(len(boom)-1, 0, -1):
-        
-        pre += norm.pop()
+if(len(original_str) == 0):
+    print("FRULA")
+else:
+    print(''.join(s for s in original_str))
