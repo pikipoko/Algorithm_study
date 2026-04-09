@@ -1,7 +1,7 @@
-## °³³ä
-ÄÚÅ×¿¡¼­ int <-> String <-> char º¯È¯ÀÌ ÀÚÁÖ ÇÊ¿äÇÏ´Ù.
+## ê°œë…
+ì½”í…Œì—ì„œ int <-> String <-> char ë³€í™˜ì´ ìì£¼ í•„ìš”í•˜ë‹¤.
 
-## ÄÚµå ÅÛÇÃ¸´
+## ì½”ë“œ í…œí”Œë¦¿
 ```java
 public class main
 {
@@ -18,7 +18,7 @@ public class main
         char back = (char)('a' + n);    // 'a'
         
         char digit = '5';
-        int d = digit - '0';            // 5 (char ¼ıÀÚ -> int)
+        int d = digit - '0';            // 5 (char ìˆ«ì -> int)
         char dc = (char)('0' + 5);      // '5'
         
         // int <-> char

@@ -1,4 +1,4 @@
-## ÄÚµå ÅÛÇÃ¸´
+## ì½”ë“œ í…œí”Œë¦¿
 ```java
 public class Main
 {
@@ -7,13 +7,13 @@ public class Main
         Math.max(a, b);
         Math.min(a, b);
         Math.abs(x);
-        Math.sqrt(x);           // double ¹İÈ¯
-        (int) Math.sqrt(x);     // int·Î Ä³½ºÆÃ
-        Math.pow(2, 10);        // 2^10, double ¹İÈ¯
-        (long) Math.pow(2, 10)  // longÀ¸·Î Ä³½ºÆÃ
+        Math.sqrt(x);           // double ë°˜í™˜
+        (int) Math.sqrt(x);     // intë¡œ ìºìŠ¤íŒ…
+        Math.pow(2, 10);        // 2^10, double ë°˜í™˜
+        (long) Math.pow(2, 10)  // longìœ¼ë¡œ ìºìŠ¤íŒ…
     }
     
-    // ¼Ò¼ö ÆÇº°
+    // ì†Œìˆ˜ íŒë³„
     boolean isPrime(int n)
     {
         if( n < 2)
@@ -26,13 +26,13 @@ public class Main
         return true;
     }
     
-    // ÃÖ´ë°ø¾à¼ö (GCD)
+    // ìµœëŒ€ê³µì•½ìˆ˜ (GCD)
     int gcd(int a, int b)
     {
         return b == 0? a : gcd(b, a % b);
     }
     
-    // ÃÖ¼Ò°ø¹è¼ö (LCM)
+    // ìµœì†Œê³µë°°ìˆ˜ (LCM)
     int lcm(int a, int b)
     {
         return a / gcd(a, b) * b;
