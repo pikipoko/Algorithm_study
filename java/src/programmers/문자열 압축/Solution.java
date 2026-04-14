@@ -31,12 +31,13 @@ public class Solution
     private int parseByLength(String s, int partLen)
     {
         StringBuilder sb = new StringBuilder();
-        String tmp = s.substring(0, partLen);
-        int cnt = 1;
-        int i = partLen;
-        for(; i <= s.length() - partLen; i += partLen)
+        String tmp = "";
+        int cnt = 0;
+
+        for(int i = 0; i < s.length(); i += partLen)
         {
-            String t = s.substring(i, i + partLen);
+            int end = Math.min(i + partLen, s.length());
+            String t = s.substring(i, end);
             if(tmp.equals(t))
             {
                 cnt++;
@@ -44,7 +45,8 @@ public class Solution
             }
             if(cnt > 1)
                 sb.append(cnt);
-            sb.append(tmp);
+            if(!tmp.isEmpty())
+                sb.append(tmp);
             tmp = t;
             cnt = 1;
         }
@@ -53,11 +55,6 @@ public class Solution
             sb.append(cnt);
         }
         sb.append(tmp);
-        if(i < s.length())
-        {
-            tmp = s.substring(i);
-            sb.append(tmp);
-        }
 
         return sb.length();
     }
