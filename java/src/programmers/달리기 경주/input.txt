@@ -1,0 +1,6 @@
+players                                 callings
+["mumu", "soe", "poe", "kai", "mine"]   ["kai", "kai", "mine", "mine"]
+["mumu", "soe", "poe", "kai", "mine"]   ["mine", "mine", "kai", "kai"]
+["mumu", "soe", "poe", "kai", "mine"]   ["kai", "mine", "kai", "mine"]
+["mumu", "soe", "poe", "kai", "mine"]   ["mine", "kai", "mine", "kai"]
+
