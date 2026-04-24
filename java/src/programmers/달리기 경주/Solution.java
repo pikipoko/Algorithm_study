@@ -71,7 +71,22 @@ public class Solution {
 
     private void rankUp(Map<Integer, String> players, String call, int up)
     {
+        int rank = 0;
+        for(Map.Entry<Integer, String> player : players.entrySet())
+        {
+            if(player.getValue().equals(call))
+            {
+                rank = player.getKey();
+                break;
+            }
+        }
 
+        for(int i = 0; i < up; i++)
+        {
+            players.put(rank - i, players.get(rank - i - 1));
+        }
+
+        players.put(rank - up, call);
         System.out.println(String.format("%s, %s %d up", players, call, up));
     }
 }
