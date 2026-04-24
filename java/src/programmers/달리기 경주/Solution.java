@@ -13,12 +13,8 @@ public class Solution {
     }
 
     public String[] solution(String[] players, String[] callings) {
-
-//        LinkedList<String> result = new LinkedList<>(Arrays.asList(players));
-        Map<Integer, String> result = new HashMap<>();
-//        ArrayList<String> result = new ArrayList<>(List.of(players));
-        setMap(players, result);
-
+        Map<String, Integer> Rankers = new HashMap<>();
+        setMap(players, Rankers);
         int cnt = 0;
         for(int i = 0; i < callings.length; i++)
         {
@@ -27,12 +23,31 @@ public class Solution {
             {
                 continue;
             }
-            rankUp(result, callings[i], cnt);
+            rankUp(players, Rankers, callings[i], cnt);
             cnt = 0;
         }
-        setArray(players, result);
-//        return result.toArray(new String[0]);
         return players;
+    }
+
+    private void rankUp(String[] players, Map<String, Integer> Rankers, String call, int up)
+    {
+        int rank = Rankers.get(call);
+
+        for(int i = 0; i < up; i++)
+        {
+            players[rank - i] = players[rank-i-1];
+            Rankers.put(players[rank-i-1], rank-i);
+        }
+        players[rank - up] = call;
+        Rankers.put(call, rank - up);
+    }
+
+    private void setMap(String[] players, Map<String, Integer> Rankers)
+    {
+        for(int i = 0; i < players.length; i++)
+        {
+            Rankers.put(players[i], i);
+        }
     }
 
     private void rankUp(LinkedList<String> players, String call, int up)
@@ -41,52 +56,6 @@ public class Solution {
         players.remove(c);
 
         players.add(c - up, call);
-        System.out.println(String.format("%s, %s %d up", players, call, up));
-    }
-    private void rankUp(ArrayList<String> players, String call, int up)
-    {
-        int c = players.indexOf(call);
-        players.remove(c);
-
-        players.add(c - up, call);
-
-        System.out.println(String.format("%s, %s %d up", players, call, up));
-    }
-
-    private void setMap(String[] players, Map<Integer, String> playersMap)
-    {
-        for(int i = 0; i < players.length; i++)
-        {
-            playersMap.put(i, players[i]);
-        }
-    }
-
-    private void setArray(String[] players, Map<Integer, String> playersMap)
-    {
-        for(Map.Entry<Integer, String> p : playersMap.entrySet())
-        {
-            players[p.getKey()] = p.getValue();
-        }
-    }
-
-    private void rankUp(Map<Integer, String> players, String call, int up)
-    {
-        int rank = 0;
-        for(Map.Entry<Integer, String> player : players.entrySet())
-        {
-            if(player.getValue().equals(call))
-            {
-                rank = player.getKey();
-                break;
-            }
-        }
-
-        for(int i = 0; i < up; i++)
-        {
-            players.put(rank - i, players.get(rank - i - 1));
-        }
-
-        players.put(rank - up, call);
         System.out.println(String.format("%s, %s %d up", players, call, up));
     }
 }
