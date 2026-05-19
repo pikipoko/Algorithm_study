@@ -1,0 +1,14 @@
+clothes
+[["yellow_hat", "headgear"], ["blue_sunglasses", "eyewear"], ["green_turban", "headgear"]]
+
+[["crow_mask", "face"], ["blue_sunglasses", "face"], ["smoky_makeup", "face"]]
+
+[["crow_mask", "face"], ["blue_sunglasses", "face"], ["smoky_makeup", "face"], ["yellow_hat", "headgear"], ["blue_sunglasses", "eyewear"], ["green_turban", "headgear"]]
+face: [crow_mask, blue_sunglasses, smoky_makeup]
+headgear: [yellow_hat, green_turban]
+eyewear: [blue_sunglasses]
+
+1: 6개
+2: 5 + 6
+3: 6
+23개
