@@ -8,37 +8,22 @@ public class Solution {
         System.out.println(sol.solution("hit", "cog", new String[]{"hot", "dot", "dog", "lot", "log"}));
     }
 
-    int minCnt;
-
     public int solution(String begin, String target, String[] words) {
-        int answer = 0;
-
-        boolean canBeChanged = false;
-        for(String w : words)
-        {
-            if(w.equals(target))
-            {
-                canBeChanged = true;
-                break;
-            }
-        }
-        if(!canBeChanged)
-            return 0;
-
-        minCnt = words.length+1;
+        int[] minCnt = {words.length + 1};
 
         boolean[] visited = new boolean[words.length];
-        dfs(words, visited, begin, target, 0);
-        return minCnt;
+        dfs(words, visited, begin, target, 0, minCnt);
+
+        return minCnt[0] == words.length+1 ? 0 : minCnt[0];
     }
 
-    private void dfs(String[] words, boolean[] visited, String cur, String target, int cnt)
+    private void dfs(String[] words, boolean[] visited, String cur, String target, int cnt, int[] minCnt)
     {
-        if(minCnt <= cnt)
+        if(minCnt[0] <= cnt)
             return;
         if(cur.equals(target))
         {
-            minCnt = cnt;
+            minCnt[0] = cnt;
             return;
         }
 
@@ -47,7 +32,7 @@ public class Solution {
             if(!visited[i] && isOneLetterDif(words[i], cur))
             {
                 visited[i] = true;
-                dfs(words, visited, words[i], target, cnt+1);
+                dfs(words, visited, words[i], target, cnt+1, minCnt);
                 visited[i] = false;
             }
         }
