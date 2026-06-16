@@ -3,19 +3,10 @@ import java.util.*;
 class Solution {
 
     public int solution(String[] maps) {
-        int answer = 0;
-
         int lenI = maps.length;
         int lenJ = maps[0].length();
-        /*
-        S : 시작 지점
-        E : 출구
-        L : 레버
-        O : 통로
-        X : 벽
-         */
-        int[] cur = {-1, -1};
-        int[] targetPoint = {-1, -1};
+
+        int[] S = new int[2], L = new int[2], E = new int[2];
 
         for(int i = 0; i < lenI; i++)
         {
@@ -23,97 +14,67 @@ class Solution {
             {
                 if(maps[i].charAt(j) == 'S')
                 {
-                    cur[0] = i;
-                    cur[1] = j;
-                    break;
+                    S[0] = i;
+                    S[1] = j;
+                }
+                else if(maps[i].charAt(j) == 'L')
+                {
+                    L[0] = i;
+                    L[1] = j;
+                }
+                else if(maps[i].charAt(j) == 'E')
+                {
+                    E[0] = i;
+                    E[1] = j;
                 }
             }
         }
 
         // 레버를 당긴 다음에 출구로 나가야 함.
-        int tmp = bfs(maps, cur, new boolean[lenI][lenJ], 'L', targetPoint);
-        if(tmp == -1)
+        int toL = bfs(maps, S, L);
+        if(toL == -1)
             return -1;
 
-        answer += tmp;
-
-        System.out.printf("answer : %d\n", answer);
-
-        cur[0] = targetPoint[0];
-        cur[1] = targetPoint[1];
-        tmp = bfs(maps, cur, new boolean[lenI][lenJ], 'E', targetPoint);
-        if(tmp == -1)
+        int toE = bfs(maps, L, E);
+        if(toE == -1)
             return -1;
 
-        answer += tmp;
-
-        return answer;
+        return toL + toE;
     }
 
-    private void dfs(String[] maps, int[] cur, boolean[][] visited, char target, int cnt, int[] minCnt, int[] targetPoint)
-    {
-        if(cnt >= minCnt[0])
-        {
-            return;
-        }
-
-        if(maps[cur[0]].charAt(cur[1]) == target)
-        {
-            minCnt[0] = cnt;
-            targetPoint[0] = cur[0];
-            targetPoint[1] = cur[1];
-            return;
-        }
-
-        int[][] dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-
-        int len = visited.length;
-
-        for(int i = 0; i < 4; i++)
-        {
-            int a = cur[0] + dirs[i][0];
-            int b = cur[1] + dirs[i][1];
-            if(a >= 0 && a < len && b >= 0 && b < len && maps[a].charAt(b) != 'X' && !visited[a][b])
-            {
-                visited[a][b] = true;
-                dfs(maps, new int[]{a, b}, visited, target, cnt+1, minCnt, targetPoint);
-                visited[a][b] = false;
-            }
-        }
-    }
-
-    private int bfs(String[] maps, int[] cur, boolean[][] visited, char target, int[] targetPoint)
+    private int bfs(String[] maps, int[] start, int[] target)
     {
         Queue<int[]> q = new LinkedList<>();
 
-        q.offer(cur);
-        visited[cur[0]][cur[1]] = true;
+        q.offer(start);
 
         int[][] dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 
         int lenI = maps.length;
         int lenJ = maps[0].length();
 
-        int cnt = 0;
+        int[][] dist = new int[lenI][lenJ];
+        for(int[] row : dist)
+        {
+            Arrays.fill(row, -1);
+        }
+        dist[start[0]][start[1]] = 0;
+
 
         while(!q.isEmpty())
         {
-            int[] tmp = q.poll();
-            System.out.printf("%d : [%d, %d] %c\n", cnt, tmp[0], tmp[1], maps[tmp[0]].charAt(tmp[1]));
-            if(maps[tmp[0]].charAt(tmp[1]) == target)
+            int[] cur = q.poll();
+            if(cur[0] == target[0] && cur[1] == target[1])
             {
-                targetPoint[0] = tmp[0];
-                targetPoint[1] = tmp[1];
-                return cnt;
+                return dist[cur[0]][cur[1]];
             }
-            cnt++;
             for(int i = 0; i < 4; i++)
             {
                 int a = cur[0] + dirs[i][0];
                 int b = cur[1] + dirs[i][1];
-                System.out.printf("%d %d : [%d, %d]\n", cnt, i, a, b);
-                if(a >= 0 && a < lenI && b >= 0 && b < lenJ && maps[a].charAt(b) != 'X')
+                if(a >= 0 && a < lenI && b >= 0 && b < lenJ && maps[a].charAt(b) != 'X' && dist[a][b] == -1)
                 {
+                    dist[a][b] = dist[cur[0]][cur[1]] + 1;
                     q.offer(new int[]{a, b});
                 }
             }
