@@ -5,35 +5,29 @@ class Solution {
     public int[] solution(int[] prices) {
         int[] answer = new int[prices.length];
 
-        ArrayList<Integer> up = new ArrayList<>();
-        int curr = prices[0];
+        ArrayList<Integer> idx = new ArrayList<>();
 
-        for(int i = 1; i < prices.length; i++)
+        for(int n = 1; n < prices.length; n++)
         {
-            int next = prices[i];
+            int c = n-1;
+            int curr = prices[c];
+            int next = prices[n];
             System.out.printf("curr[%d] next[%d] answer[%s->", curr, next, Arrays.toString(answer));
 
             if(curr <= next)
             {
-                up.addLast(curr);
+                idx.addLast(c);
             }
             else
             {
                 // next < curr
-                int down = 1;
-
-                // up 1, 2
-                // curr 3
-                // next 2
-                int tmp = curr;
-                while(!up.isEmpty() && tmp > next)
+                while(!idx.isEmpty() && prices[c] > prices[n])
                 {
-                    answer[i-down] = down;
-                    tmp = up.removeLast();
-                    down++;
+                    answer[c] = n - c;
+                    c = idx.removeLast();
                 }
-                if(tmp > next)              // 마지막 pop된 값도 처리
-                    answer[i-down] = down;
+                if(prices[c] > prices[n])              // 마지막 pop된 값도 처리
+                    answer[c] = down;
             }
             curr = next;
             System.out.printf("%s]\n", Arrays.toString(answer));
