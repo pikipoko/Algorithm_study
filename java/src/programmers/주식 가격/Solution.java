@@ -3,43 +3,27 @@ import java.util.*;
 class Solution {
 
     public int[] solution(int[] prices) {
-        int[] answer = new int[prices.length];
+		int[] answer = new int[prices.length];
 
-        ArrayList<Integer> idx = new ArrayList<>();
+		Deque<Integer> stack = new ArrayDeque<>();
 
-        for(int n = 1; n < prices.length; n++)
-        {
-            int c = n-1;
-            int curr = prices[c];
-            int next = prices[n];
-            System.out.printf("curr[%d] next[%d] answer[%s->", curr, next, Arrays.toString(answer));
+		for(int i = 0; i < prices.length; i++)
+		{
+			while(!stack.isEmpty() && prices[stack.getLast()] > prices[i])
+			{
+				int idx = stack.removeLast();
+				answer[idx] = i - idx;
+			}
+			stack.addLast(i);
+		}
 
-            if(curr <= next)
-            {
-                idx.addLast(c);
-            }
-            else
-            {
-                // next < curr
-                while(!idx.isEmpty() && prices[c] > prices[n])
-                {
-                    answer[c] = n - c;
-                    c = idx.removeLast();
-                }
-                if(prices[c] > prices[n])              // 마지막 pop된 값도 처리
-                    answer[c] = down;
-            }
-            curr = next;
-            System.out.printf("%s]\n", Arrays.toString(answer));
-        }
+		while(!stack.isEmpty())
+		{
+			int idx = stack.removeLast();
+			answer[idx] = prices.length - 1 - idx;
+		}
 
-        for(int i = 0; i < prices.length; i++)
-        {
-            if(answer[i] == 0)
-                answer[i] = prices.length - i - 1;
-        }
-
-        return answer;
+		return answer;
     }
 
     public static void main(String[] args) {
